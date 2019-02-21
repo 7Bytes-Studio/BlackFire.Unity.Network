@@ -13,6 +13,6 @@ namespace BlackFire.Unity.Network
     /// </summary>
     public interface ICommandDispatcher<TPackageInfo> where TPackageInfo : IPackageInfo
     {
-        void Dispatch(TransportBase transport,TPackageInfo info,List<CommandBase<TPackageInfo>> commands);
+        void Dispatch(TransportBase transport,TPackageInfo info,List<CommandBase<TPackageInfo>> commands,TransportEventArgs eventArgs);
     }
 }

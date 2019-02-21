@@ -23,9 +23,10 @@ namespace BlackFire.Unity.Network
             for (int i = 0; i < tps.Length; i++)
             {
                 var ins = Utility.Reflection.New(tps[i]);
+                var cmd = ins as CommandBase<TPackageInfo>;
                 if (null!=ins)
                 {
-                    m_CommandList.Add(ins as CommandBase<TPackageInfo>);
+                    m_CommandList.Add(cmd);
                 }
             }
         }
@@ -38,7 +39,8 @@ namespace BlackFire.Unity.Network
         private void PackageHander_OnMessage(object sender,TransportEventArgs args)
         {
             var info = m_ReceiveFilter.Filter(args.Message, 0, args.Length);
-            m_CommandDispatcher.Dispatch(m_Transport,info,m_CommandList);
+            if(null!=info)
+                m_CommandDispatcher.Dispatch(m_Transport,info,m_CommandList,args);
         }
         
         private void PackageHander_OnClose(object sender,TransportEventArgs args)

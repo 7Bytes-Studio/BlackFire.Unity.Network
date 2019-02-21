@@ -8,6 +8,13 @@ namespace BlackFire.Unity.Network
 {
     public abstract class CommandBase<TPackageInfo> : ICommand<TPackageInfo> where TPackageInfo : IPackageInfo
     {
+        internal TransportEventArgs EventArgs = null;
+        
+        protected void RecycleTransportEventArgs()
+        {
+            RecyclableEventArgs.Recycle(EventArgs);
+        }
+
         public abstract void ExecuteCommand(TransportBase transport, TPackageInfo packageInfo);
     }
 }
